@@ -1,3 +1,4 @@
+import axios from 'axios';
 import './App.css';
 import ParticlesBg from 'particles-bg';
 import Navigation from './components/Navigation/Navigation';
@@ -8,7 +9,7 @@ import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import SignIn from './components/SignIn/SignIn';
 import Register from './components/Register/Register';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App() {
   const returnClarifaiRequestOptions = (imageUrl) => {
@@ -91,6 +92,17 @@ function App() {
       .catch((error) => console.log('error', error));
   };
 
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/')
+      .then((response) => {
+        console.log(response.data);
+      })
+
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
   return (
     <div className="App">
       <ParticlesBg
