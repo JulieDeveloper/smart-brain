@@ -1,4 +1,23 @@
+import { useState } from 'react';
+import axios from 'axios';
+
 const SignIn = ({ onRouteChange }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const handleSubmitSignIn = () => {
+    axios
+      .post('http://localhost:3001/signin', {
+        email: email,
+        password: password,
+      })
+      .then((response) => {
+        if (response.data === 'success') {
+          onRouteChange('home');
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-1 mw6 shadow-5 center">
       <main className="pa4 black-80">
@@ -14,6 +33,10 @@ const SignIn = ({ onRouteChange }) => {
                 type="email"
                 name="email-address"
                 id="email-address"
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+                value={email}
               />
             </div>
             <div className="mv3">
@@ -25,6 +48,10 @@ const SignIn = ({ onRouteChange }) => {
                 type="password"
                 name="password"
                 id="password"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                value={password}
               />
             </div>
             <label className="pa0 ma0 lh-copy f6 pointer">
@@ -33,7 +60,7 @@ const SignIn = ({ onRouteChange }) => {
           </fieldset>
           <div className="">
             <input
-              onClick={() => onRouteChange('home')}
+              onClick={handleSubmitSignIn}
               className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
               type="submit"
               value="Sign in"
