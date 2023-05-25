@@ -80,7 +80,7 @@ function App() {
   const handleInputChange = (event) => {
     setInput(event.target.value);
   };
-  const handleBtnSubmit = () => {
+  const handlePhotoSubmit = () => {
     setImgUrl(input);
 
     fetch(
@@ -120,7 +120,7 @@ function App() {
           <ImageLinkForm
             inputValue={input}
             onInputChange={handleInputChange}
-            onBtnSubmit={handleBtnSubmit}
+            onPhotoSubmit={handlePhotoSubmit}
           />
           <FaceRecognition box={box} imgUrl={imgUrl} />
         </>
