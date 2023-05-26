@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-const SignIn = ({ onRouteChange }) => {
+const SignIn = ({ onRouteChange, loadUser }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const handleSubmitSignIn = () => {
@@ -11,8 +11,9 @@ const SignIn = ({ onRouteChange }) => {
         password: password,
       })
       .then((response) => {
-        if (response.data === 'success') {
+        if (response.data.id) {
           onRouteChange('home');
+          loadUser(response.data);
         }
       })
       .catch((error) => console.log(error));
