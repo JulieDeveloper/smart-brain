@@ -103,17 +103,29 @@ function App() {
       `https://api.clarifai.com/v2/models/face-detection/versions/6dc7e46bc9124c5c8824be4822abe105/outputs`,
       returnClarifaiRequestOptions(input),
     )
-      .then((response) => response.json())
-      .then((result) => displayFaceBox(calcFaceLocation(result)))
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Error: Clarifai API request failed.');
+        }
+      })
+      .then((result) => {
+        displayFaceBox(calcFaceLocation(result));
+        return axios.put('http://localhost:3001/image', { id: user.id });
+      })
+      .then((response) => {
+        setUser({ ...user, entries: response.data });
+      })
       .catch((error) => console.log('error', error));
   };
 
   useEffect(() => {
     axios
       .get('http://localhost:3001/')
-      .then((response) => {
-        console.log(response.data);
-      })
+      // .then((response) => {
+      //   console.log(response.data);
+      // })
 
       .catch(function (error) {
         console.log(error);
