@@ -70,6 +70,8 @@ function App() {
   const handleRouteChange = (route) => {
     if (route === 'signOut') {
       setIsSignedIn(false);
+      setImgUrl('');
+      setInput('');
     } else if (route === 'home') {
       setIsSignedIn(true);
     }
