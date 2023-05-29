@@ -12,6 +12,7 @@ const SignIn = ({ onRouteChange, loadUser }) => {
       })
       .then((response) => {
         if (response.data.id) {
+          // getting id to make sure the login data exist
           onRouteChange('home');
           loadUser(response.data);
         }
